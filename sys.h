@@ -5,6 +5,7 @@
 #include "file.h"
 #include <stdlib.h>
 #include "JSON.h"
+#include "security.h"
 class sys {
   public:
     // imports all header class
@@ -13,6 +14,7 @@ class sys {
     convert convert;
     file file;
     JSON JSON;
+    security security;
     // console methods
     void log(std::string x){
         std::cout << x;
