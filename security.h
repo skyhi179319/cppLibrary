@@ -52,7 +52,7 @@ public:
         }
     }
     // using the structure to find the info
-    bool verify(std::string userAtt, std::string pass){
+    bool verify(std::string userAtt, std::string passAtt){
         if(Equal(info.username,userAtt) && Equal(info.password,passAtt)){
             return true;
         } else{
