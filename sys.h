@@ -13,7 +13,9 @@ class sys {
     input input;
     convert convert;
     file file;
-    JSON JSON;
+    struct{
+        JSON JSON;
+    }data;
     security security;
     // console methods
     void log(std::string x){

@@ -35,6 +35,7 @@ public:
         //assert(document["parameterB"][0]["status"].GetBool() == true);
         return query(file,pointer1)[pointer2].GetString();
     }
+    // gets Nested object
     std::string getObj(std::string file, char pointer1[100], char pointer2[100],int pointer){
         return Obj(file, pointer1,pointer2,pointer);
     }
@@ -171,7 +172,7 @@ public:
     }
     // must start document
     void start_Document(){
-        text.append(start());
+        text.append(strings.start());
     }
     /*
      * adding comma to text
@@ -182,32 +183,32 @@ public:
     }
     // creates single attribute
     void createAttribute(std::string key, std::string value){
-        std::string j = quote() + key + quote() + ":" + quote() + value + quote();
+        std::string j = strings.quote() + key + strings.quote() + ":" + strings.quote() + value + strings.quote();
         text.append(j);
     }
     // return single attribute as string
     std::string createAttributeString(std::string key, std::string value){
-        std::string j = quote() + key + quote() + ":" + quote() + value + quote();
+        std::string j = strings.quote() + key + strings.quote() + ":" + strings.quote() + value + strings.quote();
         return j;
     }
     // creates array attribute
     void createArrayAttribute(std::string key,std::string values[]){
-        std::string start =  quote() + key + quote() + ":" + array_Before();
+        std::string start =  strings.quote() + key + strings.quote() + ":" + strings.array_Before();
         // creates middle
         std::string middle = "";
         for (int i = 0; i < values->length(); i++) {
-            std::string x = quote() + values[i] + quote();
+            std::string x = strings.quote() + values[i] + strings.quote();
             middle.append(x + ",");
         }
         middle.erase(std::prev(middle.end()));
-        std::string end = array_After();
+        std::string end = strings.array_After();
         // creating actual string
         std::string v = start + middle + end;
         text.append(v);
     }
     // start nested objects
     void startNestedObj(){
-        text.append(start());
+        text.append(strings.start());
     }
     // creates nested objects
     void createNestedObj(nested n, std::string value1){
@@ -227,23 +228,23 @@ public:
     }
     // get nested object
     std::string getObj(char v[100], char value[100], int pointer){
-        return JSON.getObj(File,v,value,pointer);
+        return classes.JSON.getObj(File,v,value,pointer);
     }
     // end nested objected
     void endNestedObj(){
-        text.append(end());
+        text.append(strings.end());
     }
     // start and end nested object
     void startNested(std::string value){
-        std::string t = start() + quote() + value + quote() + ":" + array_Before();
+        std::string t = strings.start() + strings.quote() + value + strings.quote() + ":" + strings.array_Before();
         text.append(t);
     }
     void endNested(){
-        text.append(array_After() + end());
+        text.append(strings.array_After() + strings.end());
     }
     // must end document
     void end_Document(){
-        text.append(end());
+        text.append(strings.end());
     }
     // Gets Filename
     std::string getFilename(){
@@ -270,40 +271,46 @@ public:
      */
     // gets doc
     std::string getDoc(){
-        return JSON.getDocument(File);
+        return classes.JSON.getDocument(File);
     }
     // get string value
     std::string getString(char value[100]){
-        return JSON.getStringValue(File,value);
+        return classes.JSON.getStringValue(File,value);
     }
     // gets int value
     int getInt(char value[100]){
-        return JSON.getIntValue(File,value);
+        return classes.JSON.getIntValue(File,value);
     }
     // get function from JSON
     std::string get(char value[100],int value2){
-        return JSON.get(File,value,value2);
+        return classes.JSON.get(File,value,value2);
     }
 private:
-    // creating start of JSON Document
-    std::string start() {
-        return "{";
-    }
-    // creating end of JSON Document
-    std::string end() {
-        return "}";
-    }
-    // return parts of array for JSON
-    std::string array_Before() {
-        return "[";
-    }
-    std::string array_After() {
-        return "]";
-    }
-    // returns quotes mark
-    std::string quote() {
-        return "\"";
-    }
-    // JSON Class
-    JSON JSON;
+    // strings structure
+    struct{
+        // creating start of JSON Document
+        std::string start() {
+            return "{";
+        }
+        // creating end of JSON Document
+        std::string end() {
+            return "}";
+        }
+        // return parts of array for JSON
+        std::string array_Before() {
+            return "[";
+        }
+        std::string array_After() {
+            return "]";
+        }
+        // returns quotes mark
+        std::string quote() {
+            return "\"";
+        }
+    }strings;
+    // class structure
+    struct{
+        // JSON Class
+        JSON JSON;
+    }classes;
 };
