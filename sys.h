@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "JSON.h"
 #include "security.h"
+#include "run.h"
 /*!
      \brief
      * System class
@@ -19,6 +20,7 @@ class sys {
     input input;
     convert convert;
     file file;
+    run run;
     /*!
      \brief
      * data structure
